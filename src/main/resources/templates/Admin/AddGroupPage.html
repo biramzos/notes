@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить</title>
+</head>
+<body>
+    <div>
+        <h1>Добавить взвод</h1><br>
+        <form method="post" th:action="@{/admin/manage/groups/add}">
+            <label>Взвод: </label>
+            <input type="text" th:name="groupname"><br><br>
+            <label>Куратор: </label>
+            <input type="text" th:name="tutor"><br><br>
+            <label>Пароль для студентов: </label>
+            <input type="password" th:name="student"><br><br>
+            <label>Пароль для учителей: </label>
+            <input type="password" th:name="teacher"><br><br>
+            <input type="submit" value="Добавить">
+        </form>
+        <hr>
+        <button>
+            <a th:href="@{/admin/manage/groups}">Назад</a>
+        </button>
+    </div>
+</body>
+</html>

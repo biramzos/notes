@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ</title>
+</head>
+<body>
+    <div>
+        <center>
+            <h1>Войти</h1><br>
+            <form method="post" th:action="@{/admin/manage/login}">
+                <label>Логин: </label>
+                <input type="text" th:name="username"><br><br>
+                <label>Пароль: </label>
+                <input type="password" th:name="password"><br><br>
+                <input type="submit" value="Войти">
+            </form>
+        </center>
+    </div>
+</body>
+</html>

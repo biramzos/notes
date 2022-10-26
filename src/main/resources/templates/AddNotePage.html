@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${group.getGroupname()}"></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+        <h1>Добавить</h1><br>
+        <form method="post" th:action="@{/add}" enctype="multipart/form-data">
+            <label>Тема: </label>
+            <input type="text" th:name="title" size="100" required><br><br>
+            <label>Контент: </label>
+            <textarea type="text" th:name="content" rows="5" cols="100"></textarea><br><br>
+            <label>Файлы: </label>
+            <input type="file" th:name="files" max="3" multiple><br><br>
+            <input type="submit" value="Добавить"><br><br>
+        </form>
+        <button>
+            <a th:href="@{/notes}">НАЗАД</a>
+        </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Админы</title>
+</head>
+<body>
+    <h1>Админы</h1><br>
+    <div>
+        <center>
+            <form method="get" th:action="@{/admin/manage/admins}">
+                <input type="text" th:name="search">
+                <input type="submit" value="Найти">
+            </form>
+        </center>
+    </div>
+    <hr>
+    <div>
+        <center>
+            <button>
+                <a th:href="@{/admin/manage/admins/add}">Добавить</a>
+            </button>
+        </center>
+    </div>
+    <hr>
+    <div>
+        <center>
+            <table>
+                <tr>
+                    <td>Админ</td>
+                    <td>Удалить</td>
+                    <td>Обновить</td>
+                </tr>
+                <tr th:each="admin:${admins}">
+                    <td>[[ ${admin.getUsername()} ]]</td>
+                    <td>
+                        <button>
+                            <a th:href="@{'/admin/manage/admins/delete?username=' + ${admin.getUsername()}}">Удалить</a>
+                        </button>
+                    </td>
+                    <td>
+                        <button>
+                            <a>Обновить</a>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <hr>
+    <div>
+        <center>
+            <button>
+                <a th:href="@{/admin/manage/groups}">Взводы</a>
+            </button>
+            <br><br>
+            <button>
+                <a th:href="@{/admin/manage/logout}">Выйти</a>
+            </button>
+        </center>
+    </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить</title>
+</head>
+<body>
+    <div>
+        <h1>Добавить админ</h1><br>
+        <form method="post" th:action="@{/admin/manage/admins/add}">
+            <label>Логин: </label>
+            <input type="text" th:name="username"><br><br>
+            <label>Пароль: </label>
+            <input type="password" th:name="password"><br><br>
+            <input type="submit" value="Добавить">
+        </form>
+        <hr>
+        <button>
+            <a th:href="@{/admin/manage/admins}">Назад</a>
+        </button>
+    </div>
+</body>
+</html>

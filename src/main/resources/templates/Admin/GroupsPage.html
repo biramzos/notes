@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Взводы</title>
+</head>
+<body>
+    <h1>Взводы</h1><br>
+    <div>
+        <center>
+            <form method="get" th:action="@{/admin/manage/groups}">
+                <input type="text" th:name="search">
+                <input type="submit" value="Найти">
+            </form>
+        </center>
+    </div>
+    <hr>
+    <div>
+        <center>
+            <button>
+                <a th:href="@{/admin/manage/groups/add}">Добавить</a>
+            </button>
+        </center>
+    </div>
+    <hr>
+    <div>
+        <center>
+            <table>
+                <tr>
+                    <td>Взвод</td>
+                    <td>Куратор</td>
+                    <td>Удалить</td>
+                    <td>Обновить</td>
+                </tr>
+                <tr th:each="group:${groups}">
+                    <td>[[ ${group.getGroupname()} ]]</td>
+                    <td>[[ ${group.getTutor()} ]]</td>
+                    <td>
+                        <button>
+                            <a th:href="@{'/admin/manage/groups/delete?id=' + ${group.getId()}}">Удалить</a>
+                        </button>
+                    </td>
+                    <td>
+                        <button>
+                            <a>Обновить</a>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <hr>
+    <div>
+        <center>
+            <button>
+                <a th:href="@{/admin/manage/admins}">Админы</a>
+            </button>
+            <br><br>
+            <button>
+                <a th:href="@{/admin/manage/logout}">Выйти</a>
+            </button>
+        </center>
+    </div>
+</body>
+</html>

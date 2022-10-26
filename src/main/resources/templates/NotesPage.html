@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${group.getGroupname()}"></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <center>
+        <div class="btn" th:if="${role} == 'TEACHERS'"><br>
+            <button style="width: 100px; height: 30px; font-size: 18px">
+                <a th:href="@{/add}">Добавить</a>
+            </button>
+        </div>
+        <hr>
+        <div th:if="${size} == 0">
+            <h1>Заметок не имеется!</h1>
+        </div>
+        <div th:if="${size} > 0" class="note-container" width="50%" th:each="note:${notes}">
+            <strong>[[ ${note.getTitle()} ]]</strong><br>
+            <p width="30%">[[ ${note.getContent()} ]]</p>
+            <div width="30%">
+                <div th:each="file : ${fileService.getFilesByNoteId(note.getId())}">
+                    <a th:href="@{'/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
+                </div>
+                <hr width="10%" th:if="${role} == 'TEACHERS'">
+                <button th:if="${role} == 'TEACHERS'">
+                    <a th:href="@{'/delete?id=' + ${note.getId()}}">Удалить</a>
+                </button>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <button>
+                <a th:href="@{/logout}">Выйтти</a>
+            </button>
+        </div>
+    </center>
+</body>
+</html>

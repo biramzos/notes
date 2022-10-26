@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmnls>
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки Военной Кафедры AITU</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-form">
+        <center>
+            <h1>Заметки Военной Кафедры AITU</h1><br>
+            <form method="post" th:action="@{/login}">
+                <label>Взвод: </label>
+                <select th:name="groupname">
+                    <option th:each="group:${groupnames}" th:text="${group}" th:value="${group}"></option>
+                </select><br><br>
+                <label>Роль: </label>
+                <select th:name="role">
+                    <option th:value="'STUDENTS'">Студент</option>
+                    <option th:value="'TEACHERS'">Учитель</option>
+                </select><br><br>
+                <label>Пароль: </label>
+                <input type="password" th:name="password"><br><br>
+                <input type="submit" value="Войти">
+            </form>
+        </center>
+    </div>
+</body>
+</html>
