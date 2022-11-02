@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Заметки Военной Кафедры AITU</title>
-        <link rel="stylesheet" href="style/styles.css">
+        <link rel="stylesheet" th:href="@{/style/styles.css}">
     </head>
     <body>
         <nav class="navbar">
-            <img src="img/aitu-logo.png" alt="">
-            <img src="img/vsrk.png" alt="">
-            <img src="img/military-dep-logo.png" alt="">
+            <img th:src="@{img/aitu-logo.png}" alt="">
+            <img th:src="@{/img/vsrk.png}" alt="">
+            <img th:src="@{/img/military-dep-logo.png}" alt="">
         </nav>
         <section class="add-lecture container">
             <a th:href="@{/notes}">Назад</a><br>

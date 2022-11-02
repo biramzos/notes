@@ -3,16 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title>Заметки Военной Кафедры AITU</title>
-        <link rel="stylesheet" href="style/styles.css">
+        <link rel="stylesheet" th:href="@{/style/styles.css}">
     </head>
     <body>
         <nav class="navbar">
-            <img src="img/aitu-logo.png" alt="">
-            <img src="img/military-dep-logo.png" alt="">
+            <img th:src="@{/img/aitu-logo.png}" alt="">
+            <img th:src="@{/img/military-dep-logo.png}" alt="">
         </nav>
         <section class="login">
             <div>
-                <img src="img/vsrk.png" alt="">
+                <img src="../static/img/vsrk.png" alt="">
                 <h1>Military Department <br> of AITU</h1>
                 <form method="post" th:action="@{/login}">
                     <select th:name="groupname" id="group">
@@ -23,8 +23,10 @@
                         <option th:value="'TEACHERS'">Учитель</option>
                     </select><br>
                     <input id="password" th:name="password" type="password" placeholder="Пароль..."><br>
-                    <label><input type="checkbox" class="password-checkbox" onclick="showPassword()"> Показать пароль</label><br><br>
-                    <input type="submit" value="Войти">
+                    <center>
+                        <label><input type="checkbox" class="password-checkbox" onclick="showPassword()"> Показать пароль</label><br><br>
+                    </center>
+                    <input class="button" type="submit" value="Войти">
                 </form>
             </div>
         </section>

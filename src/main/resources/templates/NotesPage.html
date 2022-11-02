@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <title>Заметки Военной Кафедры AITU</title>
-        <link rel="stylesheet" href="style/styles.css">
+        <link rel="stylesheet" th:href="@{/style/styles.css}">
     </head>
     <body>
         <nav class="navbar">
-            <img src="img/aitu-logo.png" alt="">
-            <img src="img/vsrk.png" alt="">
-            <img src="img/military-dep-logo.png" alt="">
+            <img th:src="@{/img/aitu-logo.png}" alt="">
+            <img th:src="@{/img/vsrk.png}" alt="">
+            <img th:src="@{/img/military-dep-logo.png}" alt="">
         </nav>
         <section class="admin-home container">
             <p>Взвод: [[ ${group.getGroupname()} ]]</p>
             <p th:if="${role} == 'STUDENTS'">Роль: Студент</p>
             <p th:if="${role} == 'TEACHERS'">Роль: Учитель</p>
-            <a th:href="@{/logout}">Выйтти</a><br>
+            <a th:href="@{/logout}">Выйти</a><br>
             <a th:href="@{/add}" th:if="${role} == 'TEACHERS'">
                 <button class="button">Добавить</button>
             </a>
@@ -27,7 +27,7 @@
                         <a th:href="@{'/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
                     </div>
                     <br>
-                    <a th:href="@{'/delete?id=' + ${note.getId()}}" th:if="${role} == 'TEACHERS'"><img src="img/logo/trash-svgrepo-com.png" alt=""></a>
+                    <a th:href="@{'/delete?id=' + ${note.getId()}}" th:if="${role} == 'TEACHERS'"><img src="../static/img/logo/trash-svgrepo-com.png" alt=""></a>
                 </div>
             </div>
             <div class="cards" th:if="${size} == 0">
