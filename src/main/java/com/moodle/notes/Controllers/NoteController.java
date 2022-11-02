@@ -51,8 +51,9 @@ public class NoteController {
                 return "redirect:/login";
             }
             isCookie = false;
+            return "redirect:/login";
         }
-        if(!isCookie){
+        if(isCookie == false){
             res.addCookie(new Cookie("SESSION", ""));
         }
         return "redirect:/login";

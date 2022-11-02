@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${group.getGroupname()}"></title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div>
-        <h1>Добавить</h1><br>
-        <form method="post" th:action="@{/add}" enctype="multipart/form-data">
-            <label>Тема: </label>
-            <input type="text" th:name="title" size="100" required><br><br>
-            <label>Контент: </label>
-            <textarea type="text" th:name="content" rows="5" cols="100"></textarea><br><br>
-            <label>Файлы: </label>
-            <input type="file" th:name="files" max="3" multiple><br><br>
-            <input type="submit" value="Добавить"><br><br>
-        </form>
-        <button>
-            <a th:href="@{/notes}">НАЗАД</a>
-        </button>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Заметки Военной Кафедры AITU</title>
+        <link rel="stylesheet" href="style/styles.css">
+    </head>
+    <body>
+        <nav class="navbar">
+            <img src="img/aitu-logo.png" alt="">
+            <img src="img/vsrk.png" alt="">
+            <img src="img/military-dep-logo.png" alt="">
+        </nav>
+        <section class="add-lecture container">
+            <a th:href="@{/notes}">Назад</a><br>
+            <h1>Добавить</h1>
+            <form method="post" th:action="@{/add}" enctype="multipart/form-data">
+                <p>Тема</p>
+                <input type="text" th:name="title" placeholder="Наименование темы" required><br>
+                <p>Описание</p>
+                <textarea placeholder="Описание темы или задания" th:name="content" required></textarea>
+                <br>
+                <p>Файлы</p>
+                <input type="file" th:name="files" class="file" max="5" multiple>
+                <br>
+                <input type="submit" value="Добавить"><br>
+            </form>
+        </section>
+    </body>
 </html>

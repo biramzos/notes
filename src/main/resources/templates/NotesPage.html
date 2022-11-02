@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${group.getGroupname()}"></title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <center>
-        <div class="btn" th:if="${role} == 'TEACHERS'"><br>
-            <button style="width: 100px; height: 30px; font-size: 18px">
-                <a th:href="@{/add}">Добавить</a>
-            </button>
-        </div>
-        <hr>
-        <div th:if="${size} == 0">
-            <h1>Заметок не имеется!</h1>
-        </div>
-        <div th:if="${size} > 0" class="note-container" width="50%" th:each="note:${notes}">
-            <strong>[[ ${note.getTitle()} ]]</strong><br>
-            <p width="30%">[[ ${note.getContent()} ]]</p>
-            <div width="30%">
-                <div th:each="file : ${fileService.getFilesByNoteId(note.getId())}">
-                    <a th:href="@{'/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
+    <head>
+        <meta charset="UTF-8">
+        <title>Заметки Военной Кафедры AITU</title>
+        <link rel="stylesheet" href="style/styles.css">
+    </head>
+    <body>
+        <nav class="navbar">
+            <img src="img/aitu-logo.png" alt="">
+            <img src="img/vsrk.png" alt="">
+            <img src="img/military-dep-logo.png" alt="">
+        </nav>
+        <section class="admin-home container">
+            <p>Взвод: [[ ${group.getGroupname()} ]]</p>
+            <p th:if="${role} == 'STUDENTS'">Роль: Студент</p>
+            <p th:if="${role} == 'TEACHERS'">Роль: Учитель</p>
+            <a th:href="@{/logout}">Выйтти</a><br>
+            <a th:href="@{/add}" th:if="${role} == 'TEACHERS'">
+                <button class="button">Добавить</button>
+            </a>
+            <div class="cards" th:if="${size} > 0">
+                <div class="card" th:each="note:${notes}">
+                    <h1>[[ ${note.getTitle()} ]]</h1>
+                    <p>[[ ${note.getContent()} ]]</p>
+                    <div th:each="file : ${fileService.getFilesByNoteId(note.getId())}">
+                        <a th:href="@{'/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
+                    </div>
+                    <br>
+                    <a th:href="@{'/delete?id=' + ${note.getId()}}" th:if="${role} == 'TEACHERS'"><img src="img/logo/trash-svgrepo-com.png" alt=""></a>
                 </div>
-                <hr width="10%" th:if="${role} == 'TEACHERS'">
-                <button th:if="${role} == 'TEACHERS'">
-                    <a th:href="@{'/delete?id=' + ${note.getId()}}">Удалить</a>
-                </button>
             </div>
-        </div>
-        <hr>
-        <div>
-            <button>
-                <a th:href="@{/logout}">Выйтти</a>
-            </button>
-        </div>
-    </center>
-</body>
+            <div class="cards" th:if="${size} == 0">
+                <center>
+                    <h1>Заметок не имеется!</h1>
+                </center>
+            </div>
+        </section>
+    </body>
 </html>

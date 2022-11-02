@@ -1,29 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmnls>
-<head>
-    <meta charset="UTF-8">
-    <title>Заметки Военной Кафедры AITU</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="login-form">
-        <center>
-            <h1>Заметки Военной Кафедры AITU</h1><br>
-            <form method="post" th:action="@{/login}">
-                <label>Взвод: </label>
-                <select th:name="groupname">
-                    <option th:each="group:${groupnames}" th:text="${group}" th:value="${group}"></option>
-                </select><br><br>
-                <label>Роль: </label>
-                <select th:name="role">
-                    <option th:value="'STUDENTS'">Студент</option>
-                    <option th:value="'TEACHERS'">Учитель</option>
-                </select><br><br>
-                <label>Пароль: </label>
-                <input type="password" th:name="password"><br><br>
-                <input type="submit" value="Войти">
-            </form>
-        </center>
-    </div>
-</body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Заметки Военной Кафедры AITU</title>
+        <link rel="stylesheet" href="style/styles.css">
+    </head>
+    <body>
+        <nav class="navbar">
+            <img src="img/aitu-logo.png" alt="">
+            <img src="img/military-dep-logo.png" alt="">
+        </nav>
+        <section class="login">
+            <div>
+                <img src="img/vsrk.png" alt="">
+                <h1>Military Department <br> of AITU</h1>
+                <form method="post" th:action="@{/login}">
+                    <select th:name="groupname" id="group">
+                        <option th:each="group:${groupnames}" th:text="${group}" th:value="${group}"></option>
+                    </select><br>
+                    <select th:name="role" id="role">
+                        <option th:value="'STUDENTS'">Студент</option>
+                        <option th:value="'TEACHERS'">Учитель</option>
+                    </select><br>
+                    <input id="password" th:name="password" type="password" placeholder="Пароль..."><br>
+                    <label><input type="checkbox" class="password-checkbox" onclick="showPassword()"> Показать пароль</label><br><br>
+                    <input type="submit" value="Войти">
+                </form>
+            </div>
+        </section>
+        <script>
+            const input = document.getElementById("password")
+            const showPassword = () => {
+                if (input.type === "password") {
+                    input.type = "text";
+
+                } else {
+                    input.type = "password";
+
+                }
+            };
+        </script>
+    </body>
 </html>
