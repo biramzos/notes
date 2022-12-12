@@ -14,6 +14,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,6 +67,23 @@ public class AdminController {
         return "Admin/LoginAdminPage";
     }
 
+    @GetMapping("/admin/manage/password/{username}")
+    public String update_admin_get(@PathVariable("username") String username, Model m, HttpServletRequest req, HttpServletResponse res){
+        Admin currentAdmin = adminService.getAdminByUsername(getCurrentAdmin(req));
+        if(currentAdmin == null){
+            return "redirect:/admin/manage";
+        }
+        m.addAttribute("currentAdmin", currentAdmin);
+        m.addAttribute("username", username);
+        return "Admin/UpdatePasswordAdminPage";
+    }
+
+    @PostMapping("/admin/manage/password/{username}")
+    public String update_admin_post(@PathVariable("username") String username, @RequestParam("update") String update, @RequestParam("password") String password) throws NoSuchAlgorithmException {
+        adminService.update(username,password);
+        return "redirect:/admin/manage/admins";
+    }
+
     @GetMapping("/admin/manage/update/{group}")
     public String update_get(@PathVariable("group") String group, Model m, HttpServletRequest req, HttpServletResponse res){
         Admin currentAdmin = adminService.getAdminByUsername(getCurrentAdmin(req));
@@ -84,17 +102,15 @@ public class AdminController {
     }
 
     @PostMapping("/admin/manage/login")
-    public String login_post(HttpServletResponse res, @RequestParam("username") String username, @RequestParam("password") String password) throws NoSuchAlgorithmException {
-        AdminRequest r = new AdminRequest();
-        r.setUsername(username);
-        r.setPassword(password);
-        adminService.add(r);
-        if(adminService.login(r).get("message").equals("Success")){
+    public String login_post(RedirectAttributes redirectAttributes,HttpServletResponse res, @RequestParam("username") String username, @RequestParam("password") String password) throws NoSuchAlgorithmException {
+        if(adminService.login(username, password)){
             log.info(String.format("Админ %s зашел.", username));
             res.addCookie(new Cookie("SESSION_ID", TokenGenerator.generateTokenByUsername(username)));
             return "redirect:/admin/manage/groups";
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Неправильный пароль!");
+            return "redirect:/admin/manage/login";
         }
-        return "redirect:/admin/manage/login";
     }
 
     @GetMapping("/admin/manage/groups")
@@ -191,19 +207,31 @@ public class AdminController {
 
     @PostMapping("/admin/manage/admins/add")
     public String addAdmin_post(
+            RedirectAttributes redirectAttributes,
             @RequestParam("username") String username,
             @RequestParam("password") String password
     ) throws NoSuchAlgorithmException {
         Admin admin = adminService.getAdminByUsername(username);
-        if(admin != null){
+        if(password.length() >= 6 && password .length() <= 50) {
+            if (admin != null) {
+                return "redirect:/admin/manage/admins";
+            }
+            AdminRequest r = new AdminRequest();
+            r.setUsername(username);
+            r.setPassword(password);
+            adminService.add(r);
+            log.info("Добавлен новый админ: " + username);
             return "redirect:/admin/manage/admins";
+        } else {
+            String message = "";
+            if (password.length() < 6){
+                message = "Слишком мало символов!";
+            } else {
+                message = "Слишком много символов!";
+            }
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/admin/manage/admins/add";
         }
-        AdminRequest r = new AdminRequest();
-        r.setUsername(username);
-        r.setPassword(password);
-        adminService.add(r);
-        log.info("Добавлен новый админ: " + username);
-        return "redirect:/admin/manage/admins";
     }
 
     @Nullable

@@ -23,7 +23,7 @@
                         <option th:value="'STUDENTS'">Студент</option>
                         <option th:value="'TEACHERS'">Учитель</option>
                     </select><br>
-                    <input id="password" min="6" minlength="6" max="20" maxlength="20" th:name="password" type="password" placeholder="Пароль..."><br>
+                    <input id="password" th:name="password" type="password" placeholder="Пароль..."><br>
                     <center>
                         <label><input type="checkbox" class="password-checkbox label-check" onclick="showPassword()"> Показать пароль</label><br><br>
                     </center>
@@ -45,12 +45,6 @@
 
                 }
             };
-
-            if (input.value.length < 6 && input.value.length > 30) {
-                btn.disabled = true
-            } else {
-                btn.disabled = false
-            }
 
         </script>
     </body>

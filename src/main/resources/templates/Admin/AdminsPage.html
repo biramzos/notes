@@ -29,19 +29,19 @@
             <table>
                 <tr>
                     <td>Админ</td>
-                    <td>Удалить</td>
+                    <td th:if="${admins.size()} > 1">Удалить</td>
                     <td>Обновить</td>
                 </tr>
                 <tr th:each="admin:${admins}">
                     <td>[[ ${admin.getUsername()} ]]</td>
-                    <td>
+                    <td th:if="${admins.size()} > 1">
                         <button>
                             <a th:href="@{'/admin/manage/admins/delete?username=' + ${admin.getUsername()}}">Удалить</a>
                         </button>
                     </td>
                     <td>
                         <button>
-                            <a>Обновить</a>
+                            <a th:href="@{'/admin/manage/password/' + ${admin.getUsername()}}">Обновить</a>
                         </button>
                     </td>
                 </tr>

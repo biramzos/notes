@@ -32,17 +32,16 @@ public class AdminService {
     }
 
     @Nullable
-    public HashMap<String, String> login(AdminRequest request) throws NoSuchAlgorithmException {
-        Admin admin = repository.findAdminByUsername(request.getUsername());
+    public boolean login(String username, String password) throws NoSuchAlgorithmException {
+        Admin admin = repository.findAdminByUsername(username);
         if(admin != null){
-            if(admin.getPassword().equals(HashGenerator.generate(request.getPassword()))){
-                return new HashMap<String, String>(){{
-                    put("username",request.getUsername());
-                    put("message","Success");
-                }};
+            if(admin.getPassword().equals(HashGenerator.generate(password))){
+                return true;
+            } else {
+                return false;
             }
         }
-        return null;
+        return false;
     }
 
     @Nullable
@@ -64,6 +63,14 @@ public class AdminService {
             }
         }
         return admins;
+    }
+
+    public void update(String username, String password) throws NoSuchAlgorithmException {
+        Admin admin = repository.findAdminByUsername(username);
+        if (admin != null) {
+            admin.setPassword(HashGenerator.generate(password));
+            repository.save(admin);
+        }
     }
 
     @Nullable

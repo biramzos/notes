@@ -144,15 +144,15 @@ public class NoteController {
         return "redirect:/notes";
     }
 
-    @GetMapping(value = "/file/{name}", produces = "application/octet-stream")
-    public void downloadFile(@PathVariable("name") String name, @Param("id") Long id , HttpServletResponse response) throws Exception {
+    @GetMapping(value = "/file/{id}", produces = "application/octet-stream")
+    public void downloadFile(@PathVariable("id") Long id , HttpServletResponse response) throws Exception {
         File file = fileService.getFileById(id);
         if(file == null) {
             log.error("Could not Found!");
         }
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=" + name;
+        String headerValue = "attachment; filename=" + file.getName();
         response.setHeader(headerKey, headerValue);
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(file.getContent());

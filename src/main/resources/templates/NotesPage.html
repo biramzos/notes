@@ -25,7 +25,7 @@
                     <h1>[[ ${note.getTitle()} ]]</h1>
                     <p>[[ ${note.getContent()} ]]</p>
                     <div th:if="${fileService.getFilesByNoteId(note.getId()).size()} != 0" th:each="file : ${fileService.getFilesByNoteId(note.getId())}">
-                        <a th:href="@{'/file/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
+                        <a th:href="@{'/file/' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
                     </div>
                     <br>
                     <a th:href="@{'/delete?id=' + ${note.getId()}}" th:if="${role} == 'TEACHERS'"><img th:src="@{/img/logo/trash-svgrepo-com.png}" alt=""></a>
