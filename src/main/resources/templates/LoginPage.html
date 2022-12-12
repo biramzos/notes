@@ -23,16 +23,19 @@
                         <option th:value="'STUDENTS'">Студент</option>
                         <option th:value="'TEACHERS'">Учитель</option>
                     </select><br>
-                    <input id="password" th:name="password" type="password" placeholder="Пароль..."><br>
+                    <input id="password" min="6" minlength="6" max="20" maxlength="20" th:name="password" type="password" placeholder="Пароль..."><br>
                     <center>
                         <label><input type="checkbox" class="password-checkbox label-check" onclick="showPassword()"> Показать пароль</label><br><br>
                     </center>
+                    <p class="message" th:text="${message}"></p>
                     <input class="button" type="submit" value="Войти">
                 </form>
             </div>
         </section>
         <script>
             const input = document.getElementById("password")
+            const btn = document.getElementsByClassName("button")
+
             const showPassword = () => {
                 if (input.type === "password") {
                     input.type = "text";
@@ -42,14 +45,13 @@
 
                 }
             };
-            window.addEventListener('load', () => {
 
-                console.log('Cookies:', document.cookie)
+            if (input.value.length < 6 && input.value.length > 30) {
+                btn.disabled = true
+            } else {
+                btn.disabled = false
+            }
 
-                if (!document.cookie.includes('SESSION')) {
-                    document.cookie = 'SESSION=';
-                }
-            })
         </script>
     </body>
 </html>

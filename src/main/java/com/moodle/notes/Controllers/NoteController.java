@@ -21,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -78,7 +80,7 @@ public class NoteController {
     }
 
     @PostMapping("/login")
-    public String login_post(HttpServletResponse res, HttpServletRequest req, Model m,@RequestParam("role") String role, @RequestParam("groupname") String groupname, @RequestParam("password") String password) throws NoSuchAlgorithmException {
+    public String login_post(HttpServletResponse res, HttpServletRequest req, Model m,@RequestParam("role") String role, @RequestParam("groupname") String groupname, @RequestParam("password") String password, RedirectAttributes redirectAttributes) throws NoSuchAlgorithmException {
         GroupRequest r = new GroupRequest();
         r.setGroupname(groupname);
         r.setPassword(password);
@@ -94,6 +96,7 @@ public class NoteController {
             return "redirect:/notes";
         }
         else{
+            redirectAttributes.addFlashAttribute("message","Неправильный пароль!");
             return "redirect:/login";
         }
     }
