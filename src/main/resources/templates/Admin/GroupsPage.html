@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Взводы</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/military-dep-logo.png}">
 </head>
 <body>
     <h1>Взводы</h1><br>
@@ -42,7 +43,7 @@
                     </td>
                     <td>
                         <button>
-                            <a>Обновить</a>
+                            <a th:href="@{'/admin/manage/update/' + ${group.getGroupname()}}">Обновить</a>
                         </button>
                     </td>
                 </tr>

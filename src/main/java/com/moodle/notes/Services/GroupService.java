@@ -107,4 +107,14 @@ public class GroupService{
     public Group getGroupByGroupname(String groupname){
         return repository.findGroupByGroupname(groupname);
     }
+
+    public void update(String groupname, String mode, String password) throws NoSuchAlgorithmException {
+        Group group = repository.findGroupByGroupname(groupname);
+        if(mode.equals("TEACHER")){
+            group.setTeachers(HashGenerator.generate(password));
+        } else {
+            group.setStudents(HashGenerator.generate(password));
+        }
+        repository.save(group);
+    }
 }

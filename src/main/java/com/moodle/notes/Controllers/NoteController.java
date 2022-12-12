@@ -37,24 +37,31 @@ public class NoteController {
 
     @Autowired
     private FileService fileService;
-
     @GetMapping("/")
     public String home(HttpServletResponse res, HttpServletRequest req){
         Boolean isCookie = false;
         Cookie[] cookies = req.getCookies();
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("SESSION")){
-                if(!cookie.getValue().isEmpty()) {
-                    return "redirect:/notes";
+        if (cookies == null) {
+            isCookie = false;
+        }
+        else {
+            for(Cookie cookie:cookies){
+                if(cookie.getName().equals("SESSION")){
+                    if(!cookie.getValue().isEmpty()) {
+                        return "redirect:/notes";
+                    }
+                    isCookie = true;
+                    return "redirect:/login";
                 }
-                isCookie = true;
+                isCookie = false;
                 return "redirect:/login";
             }
-            isCookie = false;
-            return "redirect:/login";
         }
-        if(isCookie == false){
-            res.addCookie(new Cookie("SESSION", ""));
+        if(!isCookie){
+            Cookie cookie = new Cookie("SESSION","");
+            res.addCookie(cookie);
+        } else {
+            System.out.println();
         }
         return "redirect:/login";
     }
@@ -134,11 +141,11 @@ public class NoteController {
         return "redirect:/notes";
     }
 
-    @GetMapping(value = "/{name}", produces = "application/octet-stream")
+    @GetMapping(value = "/file/{name}", produces = "application/octet-stream")
     public void downloadFile(@PathVariable("name") String name, @Param("id") Long id , HttpServletResponse response) throws Exception {
         File file = fileService.getFileById(id);
         if(file == null) {
-            throw new Exception("Could not find");
+            log.error("Could not Found!");
         }
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";

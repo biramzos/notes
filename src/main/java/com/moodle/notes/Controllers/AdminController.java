@@ -33,18 +33,24 @@ public class AdminController {
     public String home(HttpServletResponse res, HttpServletRequest req){
         Boolean isCookie = false;
         Cookie[] cookies = req.getCookies();
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("SESSION_ID")){
-                if(!cookie.getValue().isEmpty()) {
-                    return "redirect:/admin/manage/groups";
-                }
-                isCookie = true;
-                return "redirect:/admin/manage/login";
-            }
+        if (cookies == null) {
             isCookie = false;
+        } else {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("SESSION_ID")) {
+                    if (!cookie.getValue().isEmpty()) {
+                        return "redirect:/admin/manage/groups";
+                    }
+                    isCookie = true;
+                    return "redirect:/admin/manage/login";
+                }
+                isCookie = false;
+            }
         }
         if(!isCookie){
             res.addCookie(new Cookie("SESSION_ID", ""));
+        } else{
+            System.out.println();
         }
         return "redirect:/admin/manage/login";
     }
@@ -58,6 +64,23 @@ public class AdminController {
             adminService.add(r);
         }
         return "Admin/LoginAdminPage";
+    }
+
+    @GetMapping("/admin/manage/update/{group}")
+    public String update_get(@PathVariable("group") String group, Model m, HttpServletRequest req, HttpServletResponse res){
+        Admin currentAdmin = adminService.getAdminByUsername(getCurrentAdmin(req));
+        if(currentAdmin == null){
+            return "redirect:/admin/manage";
+        }
+        m.addAttribute("currentAdmin", currentAdmin);
+        m.addAttribute("group", group);
+        return "Admin/UpdatePasswordGroupPage";
+    }
+
+    @PostMapping("/admin/manage/update/{group}")
+    public String update_post(@PathVariable("group") String group, @RequestParam("update") String update, @RequestParam("password") String password) throws NoSuchAlgorithmException {
+        groupService.update(group,update,password);
+        return "redirect:/admin/manage/groups";
     }
 
     @PostMapping("/admin/manage/login")

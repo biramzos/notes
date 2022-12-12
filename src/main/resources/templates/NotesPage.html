@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Заметки Военной Кафедры AITU</title>
         <link rel="stylesheet" th:href="@{/style/styles.css}">
+        <link rel="icon" type="image/x-icon" th:href="@{/img/military-dep-logo.png}">
     </head>
     <body>
         <nav class="navbar">
@@ -24,7 +25,7 @@
                     <h1>[[ ${note.getTitle()} ]]</h1>
                     <p>[[ ${note.getContent()} ]]</p>
                     <div th:each="file : ${fileService.getFilesByNoteId(note.getId())}">
-                        <a th:href="@{'/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
+                        <a th:href="@{'/file/' + ${file.getName()} + '?id=' + ${file.getId()}}">[[ ${file.getName()} ]]</a><br>
                     </div>
                     <br>
                     <a th:href="@{'/delete?id=' + ${note.getId()}}" th:if="${role} == 'TEACHERS'"><img src="../static/img/logo/trash-svgrepo-com.png" alt=""></a>
